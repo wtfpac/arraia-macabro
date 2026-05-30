@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Guest {
+  id        String         @id @default(cuid())
+  name      String
+  code      String         @unique
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  response  GuestResponse?
+  accesses  GuestAccess[]
+}
+
+model GuestResponse {
+  id             String   @id @default(cuid())
+  guestId        String   @unique
+  guest          Guest    @relation(fields: [guestId], references: [id])
+  confirmed      Boolean
+  plusOne        Boolean
+  plusOneName    String?
+  plusOnePhone   String?
+  respondedAt    DateTime @default(now())
+}
+
+model GuestAccess {
+  id          String   @id @default(cuid())
+  guestId     String
+  guest       Guest    @relation(fields: [guestId], references: [id])
+  ip          String
+  userAgent   String?
+  fingerprint String?
+  usedAt      DateTime @default(now())
+}

@@ -1,0 +1,293 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-05-30",
+  "__export_source": "arraia-macabro",
+  "resources": [
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "name": "Arraia Macabro",
+      "data": {
+        "base_url": "http://localhost:3000",
+        "admin_token": ""
+      }
+    },
+
+    {
+      "_id": "wrk_main",
+      "_type": "workspace",
+      "name": "Arraia Macabro API",
+      "description": "Collection completa da API do Arraiá Macabro"
+    },
+
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "name": "🔐 Auth",
+      "parentId": "wrk_main"
+    },
+    {
+      "_id": "fld_admins",
+      "_type": "request_group",
+      "name": "👤 Admin — Admins",
+      "parentId": "wrk_main"
+    },
+    {
+      "_id": "fld_guests",
+      "_type": "request_group",
+      "name": "🎉 Admin — Convidados",
+      "parentId": "wrk_main"
+    },
+    {
+      "_id": "fld_invite",
+      "_type": "request_group",
+      "name": "📩 Invite (público)",
+      "parentId": "wrk_main"
+    },
+
+    {
+      "_id": "req_login",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login admin",
+      "method": "POST",
+      "url": "{{ base_url }}/api/admin/login",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"senha123\"\n}"
+      },
+      "description": "Autentica um admin e retorna o JWT.\nCopie o token retornado e cole na variável de ambiente `admin_token`."
+    },
+
+    {
+      "_id": "req_admins_list",
+      "_type": "request",
+      "parentId": "fld_admins",
+      "name": "Listar admins",
+      "method": "GET",
+      "url": "{{ base_url }}/api/admin/admins",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "description": "Retorna todos os admins cadastrados."
+    },
+    {
+      "_id": "req_admins_create",
+      "_type": "request",
+      "parentId": "fld_admins",
+      "name": "Criar admin",
+      "method": "POST",
+      "url": "{{ base_url }}/api/admin/admins",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Novo Admin\",\n  \"email\": \"novo@example.com\",\n  \"password\": \"senha123\"\n}"
+      },
+      "description": "Cria um novo admin. Requer autenticação."
+    },
+    {
+      "_id": "req_admins_update",
+      "_type": "request",
+      "parentId": "fld_admins",
+      "name": "Atualizar admin",
+      "method": "PATCH",
+      "url": "{{ base_url }}/api/admin/admins/:id",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "pathParameters": [
+        { "name": "id", "value": "ID_DO_ADMIN" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Nome Atualizado\",\n  \"email\": \"atualizado@example.com\",\n  \"password\": \"novasenha123\"\n}"
+      },
+      "description": "Atualiza nome, email e/ou senha de um admin. Todos os campos são opcionais."
+    },
+    {
+      "_id": "req_admins_delete",
+      "_type": "request",
+      "parentId": "fld_admins",
+      "name": "Deletar admin",
+      "method": "DELETE",
+      "url": "{{ base_url }}/api/admin/admins/:id",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "pathParameters": [
+        { "name": "id", "value": "ID_DO_ADMIN" }
+      ],
+      "description": "Remove um admin. Não permite remover o último admin cadastrado."
+    },
+
+    {
+      "_id": "req_guests_list",
+      "_type": "request",
+      "parentId": "fld_guests",
+      "name": "Listar convidados",
+      "method": "GET",
+      "url": "{{ base_url }}/api/admin/guests",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "description": "Retorna todos os convidados com contagem de acessos e resposta (se houver)."
+    },
+    {
+      "_id": "req_guests_create",
+      "_type": "request",
+      "parentId": "fld_guests",
+      "name": "Criar convidado",
+      "method": "POST",
+      "url": "{{ base_url }}/api/admin/guests",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Maria Silva\"\n}"
+      },
+      "description": "Cria um novo convidado. O código único é gerado automaticamente.\nRetorna: id, name, code, createdAt."
+    },
+    {
+      "_id": "req_guests_detail",
+      "_type": "request",
+      "parentId": "fld_guests",
+      "name": "Detalhe do convidado",
+      "method": "GET",
+      "url": "{{ base_url }}/api/admin/guests/:id",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "pathParameters": [
+        { "name": "id", "value": "ID_DO_CONVIDADO" }
+      ],
+      "description": "Retorna todos os dados do convidado, incluindo histórico completo de acessos (ip, userAgent, fingerprint, timestamp) e a resposta dada."
+    },
+    {
+      "_id": "req_guests_update",
+      "_type": "request",
+      "parentId": "fld_guests",
+      "name": "Atualizar convidado",
+      "method": "PATCH",
+      "url": "{{ base_url }}/api/admin/guests/:id",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "pathParameters": [
+        { "name": "id", "value": "ID_DO_CONVIDADO" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Maria Souza\"\n}"
+      },
+      "description": "Atualiza apenas o nome do convidado. O código é imutável pois pode já ter sido enviado."
+    },
+    {
+      "_id": "req_guests_delete",
+      "_type": "request",
+      "parentId": "fld_guests",
+      "name": "Deletar convidado",
+      "method": "DELETE",
+      "url": "{{ base_url }}/api/admin/guests/:id",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ admin_token }}" }
+      ],
+      "pathParameters": [
+        { "name": "id", "value": "ID_DO_CONVIDADO" }
+      ],
+      "description": "Remove o convidado e todos os seus dados relacionados (acessos + resposta).\nRetorna 204 sem body."
+    },
+
+    {
+      "_id": "req_invite_validate",
+      "_type": "request",
+      "parentId": "fld_invite",
+      "name": "Validar convite (1º acesso)",
+      "method": "POST",
+      "url": "{{ base_url }}/api/invite/validate",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"a3f9c21b\",\n  \"fingerprint\": \"fp_abc123\"\n}"
+      },
+      "description": "Valida o código do convite e registra o acesso.\n\n✅ 200 — código válido, retorna nome do convidado e se já respondeu.\n⛔ 403 — IP diferente do primeiro acesso (convite de outra pessoa).\n❌ 404 — código não encontrado."
+    },
+    {
+      "_id": "req_invite_validate_blocked",
+      "_type": "request",
+      "parentId": "fld_invite",
+      "name": "Validar convite (IP bloqueado)",
+      "method": "POST",
+      "url": "{{ base_url }}/api/invite/validate",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "X-Forwarded-For", "value": "1.2.3.4" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"a3f9c21b\",\n  \"fingerprint\": \"fp_outro_dispositivo\"\n}"
+      },
+      "description": "Simula um acesso de IP diferente do primeiro.\nEspera 403 — acesso negado."
+    },
+    {
+      "_id": "req_invite_respond_confirm",
+      "_type": "request",
+      "parentId": "fld_invite",
+      "name": "Responder convite — confirmado + acompanhante",
+      "method": "POST",
+      "url": "{{ base_url }}/api/invite/respond",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"a3f9c21b\",\n  \"confirmed\": true,\n  \"plusOne\": true,\n  \"plusOneName\": \"Carlos Souza\",\n  \"plusOnePhone\": \"11999999999\"\n}"
+      },
+      "description": "Confirma presença com acompanhante.\n✅ 201 — resposta registrada.\n⚠️ 409 — já respondeu antes.\n⛔ 403 — IP diferente do primeiro acesso."
+    },
+    {
+      "_id": "req_invite_respond_decline",
+      "_type": "request",
+      "parentId": "fld_invite",
+      "name": "Responder convite — recusado",
+      "method": "POST",
+      "url": "{{ base_url }}/api/invite/respond",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"a3f9c21b\",\n  \"confirmed\": false,\n  \"plusOne\": false\n}"
+      },
+      "description": "Recusa o convite sem acompanhante."
+    },
+    {
+      "_id": "req_invite_respond_no_plus",
+      "_type": "request",
+      "parentId": "fld_invite",
+      "name": "Responder convite — confirmado sem acompanhante",
+      "method": "POST",
+      "url": "{{ base_url }}/api/invite/respond",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"a3f9c21b\",\n  \"confirmed\": true,\n  \"plusOne\": false\n}"
+      },
+      "description": "Confirma presença sem acompanhante."
+    }
+  ]
+}

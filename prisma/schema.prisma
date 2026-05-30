@@ -17,24 +17,32 @@ model Admin {
 }
 
 model Guest {
-  id           String        @id @default(cuid())
-  name         String
-  code         String        @unique
-  phone        String?
-  confirmed    Boolean?
-  plusOne      Boolean?
-  plusOneName  String?
-  plusOnePhone String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  accesses     GuestAccess[]
+  id        String         @id @default(cuid())
+  name      String
+  code      String         @unique
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  response  GuestResponse?
+  accesses  GuestAccess[]
+}
+
+model GuestResponse {
+  id             String   @id @default(cuid())
+  guestId        String   @unique
+  guest          Guest    @relation(fields: [guestId], references: [id])
+  confirmed      Boolean
+  plusOne        Boolean
+  plusOneName    String?
+  plusOnePhone   String?
+  respondedAt    DateTime @default(now())
 }
 
 model GuestAccess {
-  id        String   @id @default(cuid())
-  guestId   String
-  guest     Guest    @relation(fields: [guestId], references: [id])
-  ip        String
-  userAgent String?
-  usedAt    DateTime @default(now())
+  id          String   @id @default(cuid())
+  guestId     String
+  guest       Guest    @relation(fields: [guestId], references: [id])
+  ip          String
+  userAgent   String?
+  fingerprint String?
+  usedAt      DateTime @default(now())
 }

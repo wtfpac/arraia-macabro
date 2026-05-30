@@ -3,7 +3,7 @@ export default function Home() {
     <main className="min-h-screen bg-black flex flex-col items-center justify-center gap-8">
 
       {/* LOGO */}
-      <div className="text-6xl font-bold" style={{ fontFamily: "var(--font-creepster)" }}>
+      <div className="text-6xl" style={{ fontFamily: "Chunq" }}>
         <span style={{ color: "var(--straw)" }}>Pac</span>
         <span style={{ color: "var(--orange)" }}>Junino</span>
       </div>

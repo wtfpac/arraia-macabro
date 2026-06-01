@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [code, setCode] = useState("");
@@ -17,6 +17,14 @@ export default function Home() {
   const [responded, setResponded] = useState(false);
   const [phoneError, setPhoneError] = useState("");
 
+  useEffect(() => {
+    const savedCode = localStorage.getItem("arraia_code");
+    if (savedCode) {
+      setCode(savedCode);
+      validateCode(savedCode);
+    }
+  }, []);
+
   function formatPhone(value: string) {
     const digits = value.replace(/\D/g, "").slice(0, 11);
     if (digits.length <= 2) return `(${digits}`;
@@ -28,6 +36,47 @@ export default function Home() {
   function isValidPhone(value: string) {
     const digits = value.replace(/\D/g, "");
     return digits.length === 11;
+  }
+
+  async function validateCode(codeToValidate: string) {
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/invite/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: codeToValidate }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        localStorage.removeItem("arraia_code");
+        setError("Código inválido. Você não foi convidado pelas forças do além.");
+        setShake(true);
+        setTimeout(() => setShake(false), 400);
+        return;
+      }
+
+      localStorage.setItem("arraia_code", codeToValidate);
+      setGuestName(data.guest.name);
+      setAlreadyResponded(data.alreadyResponded);
+      if (data.alreadyResponded) setResponded(true);
+      setGuestId(data.guest.id);
+      setPhase("transition");
+      setTimeout(() => setPhase("invite"), 1200);
+
+    } catch {
+      setError("Erro de conexão. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleSubmit() {
+    if (!code.trim()) return;
+    await validateCode(code);
   }
 
   async function handleRespond() {
@@ -51,40 +100,6 @@ export default function Home() {
       setResponded(true);
     } catch {
       console.error("Erro ao registrar resposta");
-    }
-  }
-
-  async function handleSubmit() {
-    if (!code.trim()) return;
-    setLoading(true);
-    setError("");
-
-    try {
-      const res = await fetch("/api/invite/validate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError("Código inválido. Você não foi convidado pelas forças do além.");
-        setShake(true);
-        setTimeout(() => setShake(false), 400);
-        return;
-      }
-
-      setGuestName(data.guest.name);
-      setAlreadyResponded(data.alreadyResponded);
-      setGuestId(data.guest.id);
-      setPhase("transition");
-      setTimeout(() => setPhase("invite"), 1200);
-
-    } catch {
-      setError("Erro de conexão. Tente novamente.");
-    } finally {
-      setLoading(false);
     }
   }
 

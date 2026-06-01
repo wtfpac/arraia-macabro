@@ -9,25 +9,42 @@ export default function Home() {
   const [shake, setShake] = useState(false);
   const [showTransition, setShowTransition] = useState(false);
   const [phase, setPhase] = useState<"login" | "transition" | "invite">("login");
+  const [guestName, setGuestName] = useState("");
+  const [alreadyResponded, setAlreadyResponded] = useState(false);
+  const [guestId, setGuestId] = useState("");
 
   async function handleSubmit() {
     if (!code.trim()) return;
     setLoading(true);
     setError("");
 
-    // mock por enquanto, trocar pela API depois
-    await new Promise((r) => setTimeout(r, 1000));
+    try {
+      const res = await fetch("/api/invite/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      });
 
-    if (code.toUpperCase() === "TESTE123") {
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError("Código inválido. Você não foi convidado pelas forças do além.");
+        setShake(true);
+        setTimeout(() => setShake(false), 400);
+        return;
+      }
+
+      setGuestName(data.guest.name);
+      setAlreadyResponded(data.alreadyResponded);
+      setGuestId(data.guest.id);
       setPhase("transition");
       setTimeout(() => setPhase("invite"), 1200);
-    } else {
-      setError("Código inválido. Você não foi convidado pelas forças do além.");
-      setShake(true);
-      setTimeout(() => setShake(false), 400);
-    }
 
-    setLoading(false);
+    } catch {
+      setError("Erro de conexão. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -96,7 +113,13 @@ export default function Home() {
             className="text-center text-lg"
             style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}
           >
-            Você foi escolhido pelas forças do além
+            Bem-vindo ao Arraiá Macabro,
+          </p>
+          <p
+            className="text-center text-2xl"
+            style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)" }}
+          >
+            {guestName}
           </p>
 
           {/* Infos */}
@@ -127,6 +150,34 @@ export default function Home() {
               <span style={{ color: "var(--orange)", fontFamily: "var(--font-cinzel)" }}>R$40 antecipado · R$50 na hora</span>
             </div>
 
+          </div>
+
+          {/* Atrações */}
+          <div className="w-full flex flex-col gap-3">
+            <p style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>ATRAÇÕES</p>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span>🎧</span>
+                <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>DJ Bazan</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span>🍺</span>
+                <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Open Chopp</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span>🥃</span>
+                <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Vodka</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span>⚡</span>
+                <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Energético</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span>🥤</span>
+                <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Refrigerante</span>
+              </div>
+            </div>
           </div>
 
           {/* Botão WhatsApp */}

@@ -89,10 +89,57 @@ export default function Home() {
 
       {/* CONTEÚDO DO CONVITE */}
       {phase === "invite" && (
-        <div className="flex flex-col items-center gap-4">
-          <p className="text-white" style={{ fontFamily: "var(--font-cinzel)" }}>
-            conteúdo do convite aqui
+        <div className="flex flex-col items-center gap-6 w-full max-w-sm px-6 mt-8">
+
+          {/* Boas vindas */}
+          <p
+            className="text-center text-lg"
+            style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}
+          >
+            Você foi escolhido pelas forças do além
           </p>
+
+          {/* Infos */}
+          <div className="w-full flex flex-col gap-3">
+
+            <div className="flex justify-between border-b border-red-900 pb-2">
+              <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>DATA</span>
+              <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Sábado, 20 de Junho</span>
+            </div>
+
+            <div className="flex justify-between border-b border-red-900 pb-2">
+              <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>HORA</span>
+              <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>20:00</span>
+            </div>
+
+            <div className="flex justify-between border-b border-red-900 pb-2">
+              <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>LOCAL</span>
+              <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Enviado após pagamento</span>
+            </div>
+
+            <div className="flex justify-between border-b border-red-900 pb-2">
+              <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>DRESS CODE</span>
+              <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Caipira / Terror</span>
+            </div>
+
+            <div className="flex justify-between border-b border-red-900 pb-2">
+              <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>VALOR</span>
+              <span style={{ color: "var(--orange)", fontFamily: "var(--font-cinzel)" }}>R$40 antecipado · R$50 na hora</span>
+            </div>
+
+          </div>
+
+          {/* Botão WhatsApp */}
+
+          <a href="https://wa.me/5545999414753?text=Olá,%20quero%20confirmar%20minha%20presença%20para%20o%20Arraiá%20Macabro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full text-center bg-red-900 hover:bg-red-800 text-white font-bold py-3 rounded tracking-widest transition-colors"
+            style={{ fontFamily: "var(--font-cinzel)" }}
+          >
+            CONFIRMAR PRESENÇA
+          </a>
+
         </div>
       )}
 

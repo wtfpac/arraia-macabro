@@ -28,13 +28,30 @@ input:focus {
 button:hover {
   box-shadow: 0 0 16px rgba(232, 98, 26, 0.4);
 }
+
 /* animações de transição */
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-8px); }
-  40% { transform: translateX(8px); }
-  60% { transform: translateX(-6px); }
-  80% { transform: translateX(6px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-8px);
+  }
+
+  40% {
+    transform: translateX(8px);
+  }
+
+  60% {
+    transform: translateX(-6px);
+  }
+
+  80% {
+    transform: translateX(6px);
+  }
 }
 
 .shake {
@@ -42,13 +59,27 @@ button:hover {
 }
 
 @keyframes slideOutLeft {
-  0% { transform: translateX(0); opacity: 1; }
-  100% { transform: translateX(-120%); opacity: 0; }
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
 }
 
 @keyframes slideInRight {
-  0% { transform: translateX(120%); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
+  0% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .slide-out-left {

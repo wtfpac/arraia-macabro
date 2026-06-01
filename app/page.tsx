@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import Particles from "react-tsparticles";
+import { loadSlim } from "tsparticles-slim";
 
 export default function Home() {
   const [code, setCode] = useState("");
@@ -16,6 +18,10 @@ export default function Home() {
   const [plusOnePhone, setPlusOnePhone] = useState("");
   const [responded, setResponded] = useState(false);
   const [phoneError, setPhoneError] = useState("");
+
+  const particlesInit = useCallback(async (engine: unknown) => {
+    await loadSlim(engine as Parameters<typeof loadSlim>[0]);
+  }, []);
 
   useEffect(() => {
     const savedCode = localStorage.getItem("arraia_code");
@@ -104,11 +110,37 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-black flex flex-col items-center justify-center gap-8 overflow-hidden">
+    <main className="relative min-h-screen bg-black flex flex-col items-center justify-center gap-8 overflow-hidden">
+
+      {/* PARTÍCULAS DE BRASA */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}
+        options={{
+          background: { color: { value: "transparent" } },
+          particles: {
+            number: { value: 40 },
+            color: { value: ["#E8621A", "#8B1A1A", "#C9A84C", "#ff4400"] },
+            shape: { type: "circle" },
+            opacity: { value: 0.4 },
+            size: { value: { min: 1, max: 3 } },
+            move: {
+              enable: true,
+              speed: 1.5,
+              direction: "top",
+              outModes: { default: "out" },
+              random: true,
+              straight: false,
+            },
+          },
+          detectRetina: true,
+        }}
+      />
 
       {/* LOGO PACJUNINO */}
       {phase === "login" && (
-        <div className="text-6xl" style={{ fontFamily: "Chunq" }}>
+        <div className="relative z-10 text-6xl" style={{ fontFamily: "Chunq" }}>
           <span style={{ color: "var(--straw)" }}>Pac</span>
           <span style={{ color: "var(--orange)" }}>Junino</span>
         </div>
@@ -117,7 +149,7 @@ export default function Home() {
       {/* LOGO ARRAIÁ MACABRO */}
       {phase !== "login" && (
         <div
-          className="whitespace-nowrap"
+          className="relative z-10 whitespace-nowrap"
           style={{
             fontFamily: "Chunq",
             fontSize: phase === "invite" ? "4.5rem" : "3.5rem",
@@ -133,7 +165,7 @@ export default function Home() {
 
       {/* INPUT LOGIN */}
       {phase === "login" && (
-        <div className="flex flex-col items-center gap-4 w-full max-w-sm px-6">
+        <div className="relative z-10 flex flex-col items-center gap-4 w-full max-w-sm px-6">
           <input
             type="text"
             placeholder="Digite seu código"
@@ -157,9 +189,8 @@ export default function Home() {
 
       {/* CONTEÚDO DO CONVITE */}
       {phase === "invite" && (
-        <div className="flex flex-col items-center gap-6 w-full max-w-sm px-6 mt-8">
+        <div className="relative z-10 flex flex-col items-center gap-6 w-full max-w-sm px-6 mt-8">
 
-          {/* Boas vindas */}
           <p className="text-center text-lg" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}>
             Bem-vindo ao Arraiá Macabro,
           </p>
@@ -167,7 +198,6 @@ export default function Home() {
             {guestName}
           </p>
 
-          {/* Infos */}
           <div className="w-full flex flex-col gap-3">
             <div className="flex justify-between border-b border-red-900 pb-2">
               <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>DATA</span>
@@ -185,13 +215,8 @@ export default function Home() {
               <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>DRESS CODE</span>
               <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Caipira / Terror</span>
             </div>
-            <div className="flex justify-between border-b border-red-900 pb-2">
-              <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>VALOR</span>
-              <span style={{ color: "var(--orange)", fontFamily: "var(--font-cinzel)" }}>R$40 antecipado · R$50 na hora</span>
-            </div>
           </div>
 
-          {/* Atrações */}
           <div className="w-full flex flex-col gap-3">
             <p style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>ATRAÇÕES</p>
             <div className="flex flex-col gap-2">
@@ -218,7 +243,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Confirmação de presença */}
           {!responded && !alreadyResponded && (
             <div className="w-full flex flex-col gap-4">
               <div className="flex flex-col gap-2">
@@ -279,7 +303,6 @@ export default function Home() {
             </div>
           )}
 
-          {/* Já respondeu */}
           {(responded || alreadyResponded) && (
             <div className="text-center flex flex-col gap-3">
               <p style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)", fontSize: "1.1rem" }}>
@@ -292,8 +315,9 @@ export default function Home() {
           )}
 
         </div>
-      )}
+      )
+      }
 
-    </main>
+    </main >
   );
 }

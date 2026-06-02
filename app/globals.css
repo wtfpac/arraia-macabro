@@ -89,3 +89,18 @@ button:hover {
 .slide-in-right {
   animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+/* efeito de velocidade no scroll */
+.invite-section {
+  transition: filter 0.1s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body.scrolling .invite-section {
+  filter: blur(2px);
+  transform: translateY(-4px);
+  transition: filter 0.05s ease, transform 0.05s ease;
+}

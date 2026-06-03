@@ -7,6 +7,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, EffectCreative } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-creative';
+import Lottie from "lottie-react";
+import skullAnimation from "@/public/animations/skull.json";
 
 export default function Home() {
   const [code, setCode] = useState("");
@@ -16,15 +18,15 @@ export default function Home() {
   const [phase, setPhase] = useState<"login" | "transition" | "invite">("login");
   const [guestName, setGuestName] = useState("");
   const [alreadyResponded, setAlreadyResponded] = useState(false);
-  const [guestId, setGuestId] = useState("");
   const [plusOne, setPlusOne] = useState<boolean | null>(null);
   const [plusOneName, setPlusOneName] = useState("");
   const [plusOnePhone, setPlusOnePhone] = useState("");
   const [responded, setResponded] = useState(false);
   const [phoneError, setPhoneError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const particlesInit = useCallback(async (engine: unknown) => {
-    await loadSlim(engine as Parameters<typeof loadSlim>[0]);
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 5000);
   }, []);
 
   useEffect(() => {
@@ -35,17 +37,8 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    let scrollTimeout: ReturnType<typeof setTimeout>;
-    const handleScroll = () => {
-      document.body.classList.add("scrolling");
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        document.body.classList.remove("scrolling");
-      }, 150);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+  const particlesInit = useCallback(async (engine: unknown) => {
+    await loadSlim(engine as Parameters<typeof loadSlim>[0]);
   }, []);
 
   function formatPhone(value: string) {
@@ -86,7 +79,6 @@ export default function Home() {
       setGuestName(data.guest.name);
       setAlreadyResponded(data.alreadyResponded);
       if (data.alreadyResponded) setResponded(true);
-      setGuestId(data.guest.id);
       setPhase("transition");
       setTimeout(() => setPhase("invite"), 1200);
 
@@ -129,6 +121,27 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-black flex flex-col items-center justify-center gap-8 overflow-hidden">
 
+      {/* LOADING */}
+      {isLoading && (
+        <>
+          <div className="fixed inset-0 z-30 bg-white" />
+          <div className="fixed inset-0 z-40 bg-black curtain-down" />
+          <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 pointer-events-none">
+            <Lottie
+              animationData={skullAnimation}
+              loop={true}
+              style={{ width: 180, height: 180 }}
+            />
+            <div className="w-64 h-1 bg-gray-900 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-red-700 rounded-full"
+                style={{ animation: "loadingBar 5s linear forwards" }}
+              />
+            </div>
+          </div>
+        </>
+      )}
+
       {/* PARTÍCULAS DE BRASA */}
       <Particles
         id="tsparticles"
@@ -165,7 +178,7 @@ export default function Home() {
 
       {/* INPUT LOGIN */}
       {phase === "login" && (
-        <div className="relative z-10 flex flex-col items-center gap-4 w-full max-w-sm px-6">
+        <div className="relative z-10 text-6xl fade-in" style={{ fontFamily: "Chunq" }}>
           <input
             type="text"
             placeholder="Digite seu código"
@@ -189,7 +202,7 @@ export default function Home() {
 
       {/* CONTEÚDO DO CONVITE */}
       {phase === "invite" && (
-        <div className="fixed inset-0 z-10 w-full h-full">
+        <div className="fixed inset-0 z-10 w-full h-full fade-in">
           <Swiper
             direction="vertical"
             slidesPerView={1}
@@ -204,24 +217,19 @@ export default function Home() {
             }}
             className="w-full h-full"
           >
-
+            {/* SLIDE 1 — Boas vindas */}
             <SwiperSlide>
               <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6">
-
-                {/* Logo */}
                 <div className="whitespace-nowrap" style={{ fontFamily: "Chunq", fontSize: "3.5rem" }}>
                   <span style={{ color: "var(--blood)" }}>Arraiá </span>
                   <span style={{ color: "var(--orange)" }}>Macabro</span>
                 </div>
-
                 <p className="text-center text-lg" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}>
                   Bem-vindo ao Arraiá Macabro,
                 </p>
                 <p className="text-center text-2xl" style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)" }}>
                   {guestName}
                 </p>
-
-                {/* Atrações */}
                 <div className="w-full max-w-sm flex flex-col gap-3">
                   <p style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>ATRAÇÕES</p>
                   <div className="flex flex-col gap-2">
@@ -232,7 +240,6 @@ export default function Home() {
                     <div className="flex items-center gap-3"><span>🥤</span><span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Refrigerante</span></div>
                   </div>
                 </div>
-
                 <div className="animate-bounce mt-4" style={{ color: "var(--ash)" }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M12 5v14M5 12l7 7 7-7" />
@@ -270,7 +277,7 @@ export default function Home() {
                 </div>
               </div>
             </SwiperSlide>
-            
+
             {/* SLIDE 3 — Confirmação */}
             <SwiperSlide>
               <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6">
@@ -289,13 +296,12 @@ export default function Home() {
                         </button>
                         <button
                           onClick={() => setPlusOne(false)}
-                          className={`flex-1 py-2 rounded border transition-colors ${plusOne === false && plusOne !== null ? "border-orange-600 text-orange-500" : "border-red-900 text-gray-500"}`}
+                          className={`flex-1 py-2 rounded border transition-colors ${plusOne === false ? "border-orange-600 text-orange-500" : "border-red-900 text-gray-500"}`}
                         >
                           Não
                         </button>
                       </div>
                     </div>
-
                     {plusOne === true && (
                       <div className="flex flex-col gap-3">
                         <input
@@ -318,7 +324,6 @@ export default function Home() {
                       </div>
                     )}
 
-
                     <a href="https://wa.me/5545999414753?text=Olá%20quero%20confirmar%20minha%20presença%20para%20o%20Arraiá%20Macabro"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -333,7 +338,6 @@ export default function Home() {
                     </a>
                   </div>
                 )}
-
                 {(responded || alreadyResponded) && (
                   <div className="text-center flex flex-col gap-3">
                     <p style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)", fontSize: "1.1rem" }}>
@@ -351,6 +355,6 @@ export default function Home() {
         </div>
       )}
 
-    </main >
+    </main>
   );
 }

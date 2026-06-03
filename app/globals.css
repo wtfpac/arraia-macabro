@@ -13,6 +13,8 @@
   --orange: #E8621A;
   --blood: #8B1A1A;
   --straw: #C9A84C;
+  --ash: #6B4E3D;
+  --bone: #D4C5A0;
 }
 
 body {
@@ -29,7 +31,6 @@ button:hover {
   box-shadow: 0 0 16px rgba(232, 98, 26, 0.4);
 }
 
-/* animações de transição */
 @keyframes shake {
 
   0%,
@@ -58,18 +59,6 @@ button:hover {
   animation: shake 0.4s ease;
 }
 
-@keyframes slideOutLeft {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateX(-120%);
-    opacity: 0;
-  }
-}
-
 @keyframes slideInRight {
   0% {
     transform: translateX(120%);
@@ -82,25 +71,49 @@ button:hover {
   }
 }
 
-.slide-out-left {
-  animation: slideOutLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
 .slide-in-right {
   animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* efeito de velocidade no scroll */
-.invite-section {
-  transition: filter 0.1s ease;
+@keyframes loadingBar {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+@keyframes curtainDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
 }
 
-body.scrolling .invite-section {
-  filter: blur(2px);
-  transform: translateY(-4px);
-  transition: filter 0.05s ease, transform 0.05s ease;
+.curtain-down {
+  animation: curtainDown 5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* efeito transição */
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease 4s forwards;
 }

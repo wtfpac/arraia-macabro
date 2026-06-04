@@ -170,10 +170,7 @@ export default function Home() {
 
       {/* LOGO PACJUNINO */}
       {phase === "login" && (
-        <div className="relative z-10 text-6xl" style={{ fontFamily: "Chunq" }}>
-          <span style={{ color: "var(--straw)" }}>Pac</span>
-          <span style={{ color: "var(--orange)" }}>Junino</span>
-        </div>
+        <img src="/images/logo.png" alt="Arraiá Macabro" className="w-80 h-auto -mt-16" />
       )}
 
       {/* INPUT LOGIN */}
@@ -219,26 +216,32 @@ export default function Home() {
           >
             {/* SLIDE 1 — Boas vindas */}
             <SwiperSlide>
-              <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6">
-                <div className="whitespace-nowrap" style={{ fontFamily: "Chunq", fontSize: "3.5rem" }}>
-                  <span style={{ color: "var(--blood)" }}>Arraiá </span>
-                  <span style={{ color: "var(--orange)" }}>Macabro</span>
+              <div className="w-full h-full flex flex-col items-center justify-center gap-4 px-6">
+                <img src="/images/logo.png" alt="Arraiá Macabro" className="w-120 h-auto -mt-16" />
+                <p className="text-center text-2xl" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}>
+                  Olá, <span style={{ color: "var(--straw)", textShadow: "0 0 20px rgba(201,168,76,0.8), 0 0 40px rgba(201,168,76,0.4)" }}>{guestName}</span>, seja bem-vindo(a) ao Arraiá Macabro
+                </p>
+                <p className="text-center text-base max-w-lg" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)", opacity: 0.8 }}>
+                  Em celebração ao meu aniversário, apresento a nova edição do PacJunino — o Arraiá Macabro. Role para descobrir o que está por vir.
+                </p>
+                <div className="animate-bounce mt-4" style={{ color: "var(--ash)" }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 5v14M5 12l7 7 7-7" />
+                  </svg>
                 </div>
-                <p className="text-center text-lg" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}>
-                  Bem-vindo ao Arraiá Macabro,
-                </p>
-                <p className="text-center text-2xl" style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)" }}>
-                  {guestName}
-                </p>
-                <div className="w-full max-w-sm flex flex-col gap-3">
-                  <p style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>ATRAÇÕES</p>
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-3"><span>🎧</span><span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>DJ Bazan</span></div>
-                    <div className="flex items-center gap-3"><span>🍺</span><span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Open Chopp</span></div>
-                    <div className="flex items-center gap-3"><span>🥃</span><span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Vodka</span></div>
-                    <div className="flex items-center gap-3"><span>⚡</span><span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Energético</span></div>
-                    <div className="flex items-center gap-3"><span>🥤</span><span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Refrigerante</span></div>
-                  </div>
+              </div>
+            </SwiperSlide>
+
+            {/* SLIDE 2 — Atrações */}
+            <SwiperSlide>
+              <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6">
+                <p style={{ color: "var(--ash)", fontSize: "0.95rem", letterSpacing: "0.2em" }}>ATRAÇÕES</p>
+                <div className="w-full max-w-sm flex flex-col gap-4">
+                  <div className="flex items-center gap-3"><span>🎧</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>DJ Bazan</span></div>
+                  <div className="flex items-center gap-3"><span>🍺</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Open Chopp</span></div>
+                  <div className="flex items-center gap-3"><span>🥃</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Vodka</span></div>
+                  <div className="flex items-center gap-3"><span>⚡</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Energético</span></div>
+                  <div className="flex items-center gap-3"><span>🥤</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Refrigerante</span></div>
                 </div>
                 <div className="animate-bounce mt-4" style={{ color: "var(--ash)" }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -248,10 +251,10 @@ export default function Home() {
               </div>
             </SwiperSlide>
 
-            {/* SLIDE 2 — A festa */}
+            {/* SLIDE 3 — Informações + Confirmação */}
             <SwiperSlide>
-              <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6">
-                <p style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>A FESTA</p>
+              <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6 overflow-y-auto py-8">
+                <p style={{ color: "var(--ash)", fontSize: "0.95rem", letterSpacing: "0.2em" }}>A FESTA</p>
                 <div className="w-full max-w-sm flex flex-col gap-3">
                   <div className="flex justify-between border-b border-red-900 pb-2">
                     <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>DATA</span>
@@ -270,17 +273,7 @@ export default function Home() {
                     <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Caipira / Terror</span>
                   </div>
                 </div>
-                <div className="animate-bounce mt-4" style={{ color: "var(--ash)" }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 5v14M5 12l7 7 7-7" />
-                  </svg>
-                </div>
-              </div>
-            </SwiperSlide>
 
-            {/* SLIDE 3 — Confirmação */}
-            <SwiperSlide>
-              <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6">
                 {!responded && !alreadyResponded && (
                   <div className="w-full max-w-sm flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
@@ -338,6 +331,7 @@ export default function Home() {
                     </a>
                   </div>
                 )}
+
                 {(responded || alreadyResponded) && (
                   <div className="text-center flex flex-col gap-3">
                     <p style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)", fontSize: "1.1rem" }}>

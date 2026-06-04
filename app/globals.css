@@ -115,5 +115,10 @@ button:hover {
 
 .fade-in {
   opacity: 0;
-  animation: fadeIn 0.6s ease 4s forwards;
+  animation: fadeIn 0.6s ease 5s forwards;
+}
+
+.fade-in-fast {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
 }

@@ -30,6 +30,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    setTimeout(() => setIsLoading(false), 5000);
+
     const savedCode = localStorage.getItem("arraia_code");
     if (savedCode) {
       setCode(savedCode);
@@ -134,7 +136,7 @@ export default function Home() {
             />
             <div className="w-64 h-1 bg-gray-900 rounded-full overflow-hidden">
               <div
-                className="h-full bg-red-700 rounded-full"
+                className="h-full bg-orange-700 rounded-full"
                 style={{ animation: "loadingBar 5s linear forwards" }}
               />
             </div>
@@ -182,15 +184,15 @@ export default function Home() {
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-            className={`w-full bg-transparent border border-red-900 text-white text-center text-lg tracking-widest px-4 py-3 rounded outline-none focus:border-orange-600 transition-colors uppercase ${shake ? "shake" : ""}`}
+            className={`w-full bg-transparent border border-orange-900 text-white text-center text-lg tracking-widest px-4 py-3 rounded outline-none focus:border-orange-600 transition-colors uppercase ${shake ? "shake" : ""}`}
           />
           {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
+            <p className="text-orange-500 text-sm text-center">{error}</p>
           )}
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="w-full bg-red-900 hover:bg-red-800 disabled:opacity-50 text-white font-bold py-3 rounded tracking-widest transition-colors"
+            className="w-full bg-orange-900 hover:bg-orange-800 disabled:opacity-50 text-white font-bold py-3 rounded tracking-widest transition-colors"
           >
             {loading ? "VERIFICANDO..." : "ENTRAR"}
           </button>
@@ -199,7 +201,7 @@ export default function Home() {
 
       {/* CONTEÚDO DO CONVITE */}
       {phase === "invite" && (
-        <div className="fixed inset-0 z-10 w-full h-full fade-in">
+        <div className="fixed inset-0 z-10 w-full h-full fade-in-fast">
           <Swiper
             direction="vertical"
             slidesPerView={1}
@@ -224,54 +226,104 @@ export default function Home() {
                 <p className="text-center text-base max-w-lg" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)", opacity: 0.8 }}>
                   Em celebração ao meu aniversário, apresento a nova edição do PacJunino — o Arraiá Macabro. Role para descobrir o que está por vir.
                 </p>
-                <div className="animate-bounce mt-4" style={{ color: "var(--ash)" }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 5v14M5 12l7 7 7-7" />
-                  </svg>
-                </div>
+                <div className="animate-bounce" style={{ color: "#E8621A", fontSize: "1.2rem" }}>▼</div>
               </div>
             </SwiperSlide>
 
-            {/* SLIDE 2 — Atrações */}
+            {/* SLIDE 2 — Atrações + Info */}
             <SwiperSlide>
-              <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6">
-                <p style={{ color: "var(--ash)", fontSize: "0.95rem", letterSpacing: "0.2em" }}>ATRAÇÕES</p>
-                <div className="w-full max-w-sm flex flex-col gap-4">
-                  <div className="flex items-center gap-3"><span>🎧</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>DJ Bazan</span></div>
-                  <div className="flex items-center gap-3"><span>🍺</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Open Chopp</span></div>
-                  <div className="flex items-center gap-3"><span>🥃</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Vodka</span></div>
-                  <div className="flex items-center gap-3"><span>⚡</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Energético</span></div>
-                  <div className="flex items-center gap-3"><span>🥤</span><span className="text-base" style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Refrigerante</span></div>
-                </div>
-                <div className="animate-bounce mt-4" style={{ color: "var(--ash)" }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 5v14M5 12l7 7 7-7" />
-                  </svg>
-                </div>
-              </div>
-            </SwiperSlide>
+              <div className="w-full h-full flex flex-col items-center justify-center gap-8 px-6 overflow-y-auto py-8">
 
-            {/* SLIDE 3 — Informações + Confirmação */}
-            <SwiperSlide>
-              <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6 overflow-y-auto py-8">
-                <p style={{ color: "var(--ash)", fontSize: "0.95rem", letterSpacing: "0.2em" }}>A FESTA</p>
+                {/* Título O QUE TE AGUARDA */}
+                <div className="flex items-center gap-4 w-full max-w-sm">
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.4))" }} />
+                  <p style={{
+                    color: "#C9A84C",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.4em",
+                    fontFamily: "var(--font-cinzel)",
+                    textShadow: "0 0 20px rgba(201,168,76,0.8), 0 0 40px rgba(201,168,76,0.4)"
+                  }}>O QUE TE AGUARDA</p>
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.4))" }} />
+                </div>
+
+                {/* DJ Bazan em destaque */}
+                <div className="flex flex-col items-center gap-1">
+                  <span style={{ color: "var(--ash)", fontSize: "0.65rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)" }}>HEADLINER</span>
+                  <span style={{
+                    color: "#E8621A",
+                    fontFamily: "var(--font-cinzel)",
+                    fontSize: "1.6rem",
+                    textShadow: "0 0 20px rgba(232,98,26,0.5)"
+                  }}>DJ Bazan</span>
+                </div>
+
+                {/* Outros itens com bolinha */}
                 <div className="w-full max-w-sm flex flex-col gap-3">
-                  <div className="flex justify-between border-b border-red-900 pb-2">
-                    <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>DATA</span>
+                  {["Open Chopp", "Vodka", "Energético", "Refrigerante", "Aperitivos"].map((item) => (
+                    <div key={item} className="flex items-center gap-3">
+                      <span style={{ color: "#E8621A", fontSize: "0.5rem" }}>●</span>
+                      <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)", fontSize: "0.95rem" }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Divisor A FESTA */}
+                <div className="flex items-center gap-4 w-full max-w-sm">
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.4))" }} />
+                  <p style={{
+                    color: "#C9A84C",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.4em",
+                    fontFamily: "var(--font-cinzel)",
+                    textShadow: "0 0 20px rgba(201,168,76,0.8), 0 0 40px rgba(201,168,76,0.4)"
+                  }}>A FESTA</p>
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.4))" }} />
+                </div>
+
+                {/* Infos */}
+                <div className="w-full max-w-sm flex flex-col gap-3">
+                  <div className="flex justify-between border-b pb-2" style={{ borderColor: "rgba(232,98,26,0.3)" }}>
+                    <span style={{ color: "var(--ash)", fontSize: "0.75rem", letterSpacing: "0.2em", fontFamily: "var(--font-cinzel)" }}>DATA</span>
                     <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Sábado, 20 de Junho</span>
                   </div>
-                  <div className="flex justify-between border-b border-red-900 pb-2">
-                    <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>HORA</span>
+                  <div className="flex justify-between border-b pb-2" style={{ borderColor: "rgba(232,98,26,0.3)" }}>
+                    <span style={{ color: "var(--ash)", fontSize: "0.75rem", letterSpacing: "0.2em", fontFamily: "var(--font-cinzel)" }}>HORA</span>
                     <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>20:00</span>
                   </div>
-                  <div className="flex justify-between border-b border-red-900 pb-2">
-                    <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>LOCAL</span>
-                    <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Enviado após pagamento</span>
+                  <div className="flex justify-between border-b pb-2" style={{ borderColor: "rgba(232,98,26,0.3)" }}>
+                    <span style={{ color: "var(--ash)", fontSize: "0.75rem", letterSpacing: "0.2em", fontFamily: "var(--font-cinzel)" }}>LOCAL</span>
+                    <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Rua Paris, 676</span>
                   </div>
-                  <div className="flex justify-between border-b border-red-900 pb-2">
-                    <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>DRESS CODE</span>
+                  <div className="flex justify-between border-b pb-2" style={{ borderColor: "rgba(232,98,26,0.3)" }}>
+                    <span style={{ color: "var(--ash)", fontSize: "0.75rem", letterSpacing: "0.2em", fontFamily: "var(--font-cinzel)" }}>DRESS CODE</span>
                     <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)" }}>Caipira / Terror</span>
                   </div>
+                  <div className="flex justify-between border-b pb-2" style={{ borderColor: "rgba(232,98,26,0.3)" }}>
+                    <span style={{ color: "var(--ash)", fontSize: "0.75rem", letterSpacing: "0.2em", fontFamily: "var(--font-cinzel)" }}>VALOR</span>
+                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)" }}>R$50 antec. · R$60 na hora</span>
+                  </div>
+                </div>
+
+                <div className="animate-bounce" style={{ color: "#E8621A", fontSize: "1.2rem" }}>▼</div>
+
+              </div>
+            </SwiperSlide>
+
+            {/* SLIDE 3 — Mapa + Confirmação */}
+            <SwiperSlide>
+              <div className="w-full h-full flex flex-col items-center justify-center gap-6 px-6 overflow-y-auto py-8">
+
+                {/* Mapa */}
+                <div className="w-full max-w-sm rounded overflow-hidden" style={{ height: "200px" }}>
+                  <iframe
+                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&q=Rua+Paris,+676,Foz+do+Iguaçu,Paraná`}
+                    width="100%"
+                    height="200"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                  />
                 </div>
 
                 {!responded && !alreadyResponded && (
@@ -283,13 +335,13 @@ export default function Home() {
                       <div className="flex gap-3">
                         <button
                           onClick={() => setPlusOne(true)}
-                          className={`flex-1 py-2 rounded border transition-colors ${plusOne === true ? "border-orange-600 text-orange-500" : "border-red-900 text-gray-500"}`}
+                          className={`flex-1 py-2 rounded border transition-colors ${plusOne === true ? "border-orange-600 text-orange-500" : "border-orange-900 text-gray-500"}`}
                         >
                           Sim
                         </button>
                         <button
                           onClick={() => setPlusOne(false)}
-                          className={`flex-1 py-2 rounded border transition-colors ${plusOne === false ? "border-orange-600 text-orange-500" : "border-red-900 text-gray-500"}`}
+                          className={`flex-1 py-2 rounded border transition-colors ${plusOne === false ? "border-orange-600 text-orange-500" : "border-orange-900 text-gray-500"}`}
                         >
                           Não
                         </button>
@@ -302,17 +354,17 @@ export default function Home() {
                           placeholder="Nome do acompanhante"
                           value={plusOneName}
                           onChange={(e) => setPlusOneName(e.target.value)}
-                          className="w-full bg-transparent border border-red-900 text-white px-4 py-3 rounded outline-none focus:border-orange-600 transition-colors"
+                          className="w-full bg-transparent border border-orange-900 text-white px-4 py-3 rounded outline-none focus:border-orange-600 transition-colors"
                         />
                         <input
                           type="tel"
                           placeholder="WhatsApp com DDD (ex: 45999999999)"
                           value={plusOnePhone}
                           onChange={(e) => setPlusOnePhone(formatPhone(e.target.value))}
-                          className="w-full bg-transparent border border-red-900 text-white px-4 py-3 rounded outline-none focus:border-orange-600 transition-colors"
+                          className="w-full bg-transparent border border-orange-900 text-white px-4 py-3 rounded outline-none focus:border-orange-600 transition-colors"
                         />
                         {phoneError && (
-                          <p className="text-red-500 text-xs">{phoneError}</p>
+                          <p className="text-orange-500 text-xs">{phoneError}</p>
                         )}
                       </div>
                     )}
@@ -324,7 +376,7 @@ export default function Home() {
                         if (plusOne === true && !isValidPhone(plusOnePhone)) return;
                         handleRespond();
                       }}
-                      className="w-full text-center bg-red-900 hover:bg-red-800 text-white font-bold py-3 rounded tracking-widest transition-colors"
+                      className="w-full text-center bg-orange-900 hover:bg-orange-800 text-white font-bold py-3 rounded tracking-widest transition-colors"
                       style={{ fontFamily: "var(--font-cinzel)" }}
                     >
                       CONFIRMAR PRESENÇA
@@ -338,7 +390,7 @@ export default function Home() {
                       Presença confirmada! 🩸
                     </p>
                     <p style={{ color: "var(--ash)", fontSize: "0.85rem" }}>
-                      Aguarde o contato com as informações de pagamento e endereço.
+                      Aguarde o contato com as informações de pagamento.
                     </p>
                   </div>
                 )}

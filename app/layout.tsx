@@ -22,6 +22,9 @@ const rye = Rye({
 export const metadata: Metadata = {
   title: "Arraiá Macabro",
   description: "Pac Birthday 🎃.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

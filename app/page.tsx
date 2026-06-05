@@ -64,7 +64,7 @@ export default function Home() {
       const data = await res.json();
       if (!res.ok) {
         localStorage.removeItem("arraia_code");
-        setError("Código inválido. Você não foi convidado pelas forças do além.");
+        setError("Código inválido. Será que você foi mesmo convidado?");
         setShake(true);
         setTimeout(() => setShake(false), 400);
         return;

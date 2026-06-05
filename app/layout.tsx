@@ -21,7 +21,7 @@ const rye = Rye({
 
 export const metadata: Metadata = {
   title: "Arraiá Macabro",
-  description: "Você foi convidado.",
+  description: "Pac Birthday 🎃.",
 };
 
 export default function RootLayout({

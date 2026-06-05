@@ -59,7 +59,7 @@ export default function Home() {
       const res = await fetch("/api/invite/validate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: codeToValidate }),
+        body: JSON.stringify({ code: codeToValidate.toLowerCase() }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -97,7 +97,7 @@ export default function Home() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          code,
+          code: code.toLowerCase(),
           confirmed: true,
           plusOne: plusOne === true,
           plusOneName: plusOne === true ? plusOneName : undefined,

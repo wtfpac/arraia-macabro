@@ -17,17 +17,16 @@ export default function Home() {
   const [shake, setShake] = useState(false);
   const [phase, setPhase] = useState<"login" | "transition" | "invite">("login");
   const [guestName, setGuestName] = useState("");
-  const [alreadyResponded, setAlreadyResponded] = useState(false);
   const [plusOne, setPlusOne] = useState<boolean | null>(null);
   const [plusOneName, setPlusOneName] = useState("");
   const [plusOnePhone, setPlusOnePhone] = useState("");
   const [responded, setResponded] = useState(false);
   const [phoneError, setPhoneError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [showCode, setShowCode] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 5000);
-
     const savedCode = localStorage.getItem("arraia_code");
     if (savedCode) {
       setCode(savedCode);
@@ -41,6 +40,7 @@ export default function Home() {
 
   function formatPhone(value: string) {
     const digits = value.replace(/\D/g, "").slice(0, 11);
+    if (digits.length === 0) return "";
     if (digits.length <= 2) return `(${digits}`;
     if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
     if (digits.length <= 11) return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
@@ -71,7 +71,6 @@ export default function Home() {
       }
       localStorage.setItem("arraia_code", codeToValidate);
       setGuestName(data.guest.name);
-      setAlreadyResponded(data.alreadyResponded);
       if (data.alreadyResponded) setResponded(true);
       setPhase("transition");
       setTimeout(() => setPhase("invite"), 1200);
@@ -193,10 +192,10 @@ export default function Home() {
             <SwiperSlide>
               <div className="w-full h-full flex flex-col items-center justify-center gap-4 px-6">
                 <img src="/images/logo.png" alt="Arraiá Macabro" className="w-48 sm:w-72 h-auto" />
-                <p className="text-center text-lg sm:text-2xl max-w-sm" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}>
+                <p className="text-center text-base sm:text-xl whitespace-nowrap" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}>
                   Olá, <span style={{ color: "var(--straw)", textShadow: "0 0 20px rgba(201,168,76,0.8), 0 0 40px rgba(201,168,76,0.4)" }}>{guestName}</span>, seja bem-vindo(a) ao Arraiá Macabro
                 </p>
-                <p className="text-center text-sm sm:text-base max-w-sm px-4" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)", opacity: 0.8 }}>
+                <p className="text-center text-sm sm:text-base max-w-sm" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)", opacity: 0.8 }}>
                   Em celebração ao meu aniversário, apresento a nova edição do PacJunino — o Arraiá Macabro. Role para descobrir o que está por vir.
                 </p>
                 <div className="animate-bounce" style={{ color: "#E8621A", fontSize: "1.2rem" }}>▼</div>
@@ -206,48 +205,47 @@ export default function Home() {
             {/* SLIDE 2 */}
             <SwiperSlide>
               <div className="w-full h-full flex flex-col items-center justify-center gap-5 px-6 overflow-y-auto py-6">
-
                 <div className="flex items-center gap-3 w-full max-w-xs">
                   <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.4))" }} />
-                  <p style={{ color: "#C9A84C", fontSize: "0.7rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)", textShadow: "0 0 20px rgba(201,168,76,0.8)" }}>O QUE TE AGUARDA</p>
+                  <p style={{ color: "#C9A84C", fontSize: "0.8rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)", textShadow: "0 0 20px rgba(201,168,76,0.8)" }}>O QUE TE AGUARDA</p>
                   <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.4))" }} />
                 </div>
 
                 <div className="flex flex-col items-center gap-1">
-                  <span style={{ color: "var(--ash)", fontSize: "0.6rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)" }}>HEADLINER</span>
-                  <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.4rem", textShadow: "0 0 20px rgba(232,98,26,0.5)" }}>DJ Bazan</span>
+                  <span style={{ color: "var(--ash)", fontSize: "0.7rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)" }}>HEADLINER</span>
+                  <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.6rem", textShadow: "0 0 20px rgba(232,98,26,0.5)" }}>DJ Bazan</span>
                 </div>
 
                 <div className="w-full max-w-xs flex flex-col gap-2">
                   {["Open Chopp", "Vodka", "Energético", "Refrigerante", "Aperitivos"].map((item) => (
                     <div key={item} className="flex items-center gap-3">
-                      <span style={{ color: "#E8621A", fontSize: "0.4rem" }}>●</span>
-                      <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)", fontSize: "0.9rem" }}>{item}</span>
+                      <span style={{ color: "#E8621A", fontSize: "0.5rem" }}>●</span>
+                      <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)", fontSize: "1rem" }}>{item}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="flex items-center gap-3 w-full max-w-xs">
                   <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(201,168,76,0.4))" }} />
-                  <p style={{ color: "#C9A84C", fontSize: "0.7rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)", textShadow: "0 0 20px rgba(201,168,76,0.8)" }}>A FESTA</p>
+                  <p style={{ color: "#C9A84C", fontSize: "0.8rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)", textShadow: "0 0 20px rgba(201,168,76,0.8)" }}>A FESTA</p>
                   <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.4))" }} />
                 </div>
 
                 <div className="w-full max-w-xs flex flex-col gap-2">
                   {[
                     { label: "DATA", value: "Sábado, 20 de Junho" },
-                    { label: "HORA", value: "20:00" },
+                    { label: "HORA", value: "19:00" },
                     { label: "LOCAL", value: "Rua Paris, 676" },
                     { label: "DRESS CODE", value: "Caipira / Terror" },
                   ].map((item) => (
                     <div key={item.label} className="flex justify-between border-b pb-2" style={{ borderColor: "rgba(232,98,26,0.3)" }}>
-                      <span style={{ color: "var(--ash)", fontSize: "0.7rem", letterSpacing: "0.15em", fontFamily: "var(--font-cinzel)" }}>{item.label}</span>
-                      <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)", fontSize: "0.85rem" }}>{item.value}</span>
+                      <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.15em", fontFamily: "var(--font-cinzel)" }}>{item.label}</span>
+                      <span style={{ color: "var(--bone)", fontFamily: "var(--font-cinzel)", fontSize: "1rem" }}>{item.value}</span>
                     </div>
                   ))}
                   <div className="flex justify-between border-b pb-2" style={{ borderColor: "rgba(232,98,26,0.3)" }}>
-                    <span style={{ color: "var(--ash)", fontSize: "0.7rem", letterSpacing: "0.15em", fontFamily: "var(--font-cinzel)" }}>VALOR</span>
-                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "0.85rem" }}>R$50 antec. · R$60 na hora</span>
+                    <span style={{ color: "var(--ash)", fontSize: "0.8rem", letterSpacing: "0.15em", fontFamily: "var(--font-cinzel)" }}>VALOR</span>
+                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1rem" }}>R$50 antec. · R$60 na hora</span>
                   </div>
                 </div>
 
@@ -258,7 +256,6 @@ export default function Home() {
             {/* SLIDE 3 */}
             <SwiperSlide>
               <div className="w-full h-full flex flex-col items-center justify-center gap-5 px-6 overflow-y-auto py-6">
-
                 <div className="w-full max-w-xs rounded overflow-hidden" style={{ height: "180px" }}>
                   <iframe
                     src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&q=Rua+Paris,+676,Foz+do+Iguaçu,Paraná`}
@@ -270,11 +267,17 @@ export default function Home() {
                   />
                 </div>
 
-                {!responded && !alreadyResponded && (
+                {!responded && (
                   <div className="w-full max-w-xs flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
-                      <p style={{ color: "var(--ash)", fontSize: "0.75rem", letterSpacing: "0.2em", fontFamily: "var(--font-cinzel)" }}>
-                        VAI LEVAR UM ACOMPANHANTE?
+                      <p className="text-center" style={{
+                        color: "#C9A84C",
+                        fontSize: "0.75rem",
+                        letterSpacing: "0.2em",
+                        fontFamily: "var(--font-cinzel)",
+                        textShadow: "0 0 20px rgba(201,168,76,0.8), 0 0 40px rgba(201,168,76,0.4)"
+                      }}>
+                        DESEJA CONVIDAR ALGUÉM?
                       </p>
                       <div className="flex gap-3">
                         <button onClick={() => setPlusOne(true)} className={`flex-1 py-2 rounded border text-sm transition-colors ${plusOne === true ? "border-orange-600 text-orange-500" : "border-orange-900 text-gray-500"}`}>Sim</button>
@@ -283,7 +286,7 @@ export default function Home() {
                     </div>
                     {plusOne === true && (
                       <div className="flex flex-col gap-3">
-                        <input type="text" placeholder="Nome do acompanhante" value={plusOneName} onChange={(e) => setPlusOneName(e.target.value)} className="w-full bg-transparent border border-orange-900 text-white px-4 py-2 rounded outline-none focus:border-orange-600 transition-colors text-sm" />
+                        <input type="text" placeholder="Nome do convidado" value={plusOneName} onChange={(e) => setPlusOneName(e.target.value)} className="w-full bg-transparent border border-orange-900 text-white px-4 py-2 rounded outline-none focus:border-orange-600 transition-colors text-sm" />
                         <input type="tel" placeholder="WhatsApp com DDD (ex: 45999999999)" value={plusOnePhone} onChange={(e) => setPlusOnePhone(formatPhone(e.target.value))} className="w-full bg-transparent border border-orange-900 text-white px-4 py-2 rounded outline-none focus:border-orange-600 transition-colors text-sm" />
                         {phoneError && <p className="text-orange-500 text-xs">{phoneError}</p>}
                       </div>
@@ -301,7 +304,7 @@ export default function Home() {
                   </div>
                 )}
 
-                {(responded || alreadyResponded) && (
+                {responded && (
                   <div className="text-center flex flex-col gap-3">
                     <p style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)", fontSize: "1.1rem" }}>Presença confirmada! 🩸</p>
                     <p style={{ color: "var(--ash)", fontSize: "0.85rem" }}>Aguarde o contato com as informações de pagamento.</p>

@@ -192,8 +192,10 @@ export default function Home() {
             <SwiperSlide>
               <div className="w-full h-full flex flex-col items-center justify-center gap-4 px-6">
                 <img src="/images/logo.png" alt="Arraiá Macabro" className="w-48 sm:w-72 h-auto" />
-                <p className="text-center text-base sm:text-xl whitespace-nowrap" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}>
-                  Olá, <span style={{ color: "var(--straw)", textShadow: "0 0 20px rgba(201,168,76,0.8), 0 0 40px rgba(201,168,76,0.4)" }}>{guestName}</span>, seja bem-vindo(a) ao Arraiá Macabro
+                <p className="text-center text-base sm:text-xl sm:whitespace-nowrap" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)" }}>
+                  Olá, <span style={{ color: "var(--straw)", textShadow: "0 0 20px rgba(201,168,76,0.8), 0 0 40px rgba(201,168,76,0.4)" }}>{guestName}</span>,
+                  <br className="sm:hidden" />
+                  {" "}seja bem-vindo(a) ao Arraiá Macabro
                 </p>
                 <p className="text-center text-sm sm:text-base max-w-sm" style={{ fontFamily: "var(--font-cinzel)", color: "var(--bone)", opacity: 0.8 }}>
                   Em celebração ao meu aniversário, apresento a nova edição do PacJunino — o Arraiá Macabro. Role para descobrir o que está por vir.
@@ -292,7 +294,7 @@ export default function Home() {
                       </div>
                     )}
 
-                    <a href="https://wa.me/5545999414753?text=Olá%20quero%20confirmar%20minha%20presença%20para%20o%20Arraiá%20Macabro"
+                    <a href="https://wa.me/5545999414753?text=Olá%2C%20quero%20confirmar%20minha%20presença%20no%20Arraiá%20Macabro."
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => { if (plusOne === true && !isValidPhone(plusOnePhone)) return; handleRespond(); }}
@@ -306,7 +308,7 @@ export default function Home() {
 
                 {responded && (
                   <div className="text-center flex flex-col gap-3">
-                    <p style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)", fontSize: "1.1rem" }}>Presença confirmada! 🩸</p>
+                    <p style={{ fontFamily: "var(--font-cinzel)", color: "var(--straw)", fontSize: "1.1rem" }}>Presença confirmada!</p>
                     <p style={{ color: "var(--ash)", fontSize: "0.85rem" }}>Aguarde o contato com as informações de pagamento.</p>
                   </div>
                 )}

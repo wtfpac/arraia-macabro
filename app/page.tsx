@@ -213,9 +213,16 @@ export default function Home() {
                   <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(201,168,76,0.4))" }} />
                 </div>
 
-                <div className="flex flex-col items-center gap-1">
-                  <span style={{ color: "var(--ash)", fontSize: "0.7rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)" }}>HEADLINER</span>
-                  <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.6rem", textShadow: "0 0 20px rgba(232,98,26,0.5)" }}>DJ Bazan</span>
+                <div className="flex gap-8 justify-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <span style={{ color: "var(--ash)", fontSize: "0.6rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)" }}>DJ</span>
+                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.2rem", textShadow: "0 0 20px rgba(232,98,26,0.5)" }}>Bazan</span>
+                  </div>
+                  <div style={{ width: "1px", background: "rgba(232,98,26,0.3)" }} />
+                  <div className="flex flex-col items-center gap-1">
+                    <span style={{ color: "var(--ash)", fontSize: "0.6rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)" }}>DJ</span>
+                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.2rem", textShadow: "0 0 20px rgba(232,98,26,0.5)" }}>Kang</span>
+                  </div>
                 </div>
 
                 <div className="w-full max-w-xs flex flex-col gap-2">

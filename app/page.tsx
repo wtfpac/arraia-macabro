@@ -215,13 +215,13 @@ export default function Home() {
 
                 <div className="flex gap-8 justify-center">
                   <div className="flex flex-col items-center gap-1">
-                    <span style={{ color: "var(--ash)", fontSize: "0.6rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)" }}>DJ</span>
-                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.2rem", textShadow: "0 0 20px rgba(232,98,26,0.5)" }}>Bazan</span>
+                    <span style={{ color: "#C9A84C", fontSize: "0.6rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)", textShadow: "0 0 20px rgba(201,168,76,0.8)" }}>DJ</span>
+                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.2rem", textShadow: "0 0 20px rgba(232,98,26,0.8), 0 0 40px rgba(232,98,26,0.4)" }}>Bazan</span>
                   </div>
                   <div style={{ width: "1px", background: "rgba(232,98,26,0.3)" }} />
                   <div className="flex flex-col items-center gap-1">
-                    <span style={{ color: "var(--ash)", fontSize: "0.6rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)" }}>DJ</span>
-                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.2rem", textShadow: "0 0 20px rgba(232,98,26,0.5)" }}>Kang</span>
+                    <span style={{ color: "#C9A84C", fontSize: "0.6rem", letterSpacing: "0.3em", fontFamily: "var(--font-cinzel)", textShadow: "0 0 20px rgba(201,168,76,0.8)" }}>DJ</span>
+                    <span style={{ color: "#E8621A", fontFamily: "var(--font-cinzel)", fontSize: "1.2rem", textShadow: "0 0 20px rgba(232,98,26,0.8), 0 0 40px rgba(232,98,26,0.4)" }}>Kang</span>
                   </div>
                 </div>
 

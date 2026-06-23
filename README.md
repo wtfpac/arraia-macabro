@@ -54,19 +54,33 @@ npm run dev
 arraia-macabro/
 
 ├── app/
+
 │   ├── api/
+
 │   │   ├── admin/     # Rotas administrativas
+
 │   │   ├── auth/      # Autenticação
+
 │   │   └── invite/    # Validação e resposta de convites
+
 │   ├── page.tsx
+
 │   └── layout.tsx
+
 ├── public/
+
 │   ├── images/
+
 │   ├── fonts/
+
 │   └── animations/
+
 ├── lib/
+
 │   └── prisma.ts
+
 └── prisma/
+
 └── schema.prisma
 
 ## Equipe
